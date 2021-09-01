@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id "com.google.protobuf" version "0.8.12"
 }
 
 android {
@@ -49,7 +50,52 @@ android {
 }
 
 dependencies {
+
     implementation libraries.kotlin.stdlib
 
-    implementation libraries.lifecycle.values() // Charging all lifecycle libs
+    implementation libraries.lifecycle.values()
+    implementation libraries.core.values()
+    implementation libraries.security.values()
+
+    implementation libraries.koin.values()
+    testImplementation libraries.koin_test
+
+    implementation libraries.navigation.values()
+    implementation libraries.paging.values()
+    implementation libraries.retrofit2.values()
+
+    implementation libraries.room.values()
+    kapt libraries.room_kapt
+
+    implementation libraries.gson.values()
+    implementation libraries.workmanager.values()
+    implementation libraries.concurrent.values()
+    implementation libraries.recyclerview.values()
+    implementation libraries.viewpager2.values()
+    implementation libraries.coroutines.values()
+    implementation libraries.coil.values()
+    implementation libraries.lottie.values()
+
+    implementation libraries.espresso.values()
+
+
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.14.0"
+    }
+
+    // Generates the java Protobuf-lite code for the Protobufs in this project. See
+    // https://github.com/google/protobuf-gradle-plugin#customizing-protobuf-compilation
+    // for more information.
+    generateProtoTasks {
+        all().each { task ->
+            task.builtins {
+                java {
+                    option 'lite'
+                }
+            }
+        }
+    }
 }

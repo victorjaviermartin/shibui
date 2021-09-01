@@ -14,6 +14,9 @@ ext.versions = [
         core_ktx                :   "1.6.0",
         appcompat               :   "1.3.1",
         material                :   "1.4.0",
+        security                :   "1.0.0",
+        datastore_core          :   "1.0.0",
+        protobuf_javalite       :   "3.17.3",
         constraintlayout        :   "2.1.0",
         navigation              :   "2.4.0-alpha06",
         paging                  :   "3.0.1",
@@ -24,9 +27,9 @@ ext.versions = [
         recyclerview_selection  :   "1.1.0",
         viewpager2              :   "1.0.0",
         coroutines              :   "1.5.1",
-        moshi                   :   "1.12.0",
+        gson                    :   "2.8.8",
         retrofit2               :   "2.9.0",
-        okhttp                  :   "4.9.0",
+        okhttp                  :   "4.9.1",
         coil                    :   "1.3.2",
         lottie                  :   "4.0.0",
         junit                   :   "4.13.2",
@@ -85,30 +88,41 @@ def core = [
 libraries.core = core
 
 // ═════════════════════════════════════════════════════════════════════════════════════════════
+// Security - Securely manage keys and encrypt shared files and preferences
+// ═════════════════════════════════════════════════════════════════════════════════════════════
+def security = [
+        security                :   "androidx.security:security-crypto:$versions.security",
+        datastore_core          :   "androidx.datastore:datastore-core:$versions.datastore_core",
+        datastore_preferences   :   "androidx.datastore:datastore-preferences:$versions.datastore_core",
+        protobuf_javalite       :   "com.google.protobuf:protobuf-javalite:$versions.protobuf_javalite"
+]
+libraries.security = security
+
+// ═════════════════════════════════════════════════════════════════════════════════════════════
 // Koin - Dependency Injection
 // ═════════════════════════════════════════════════════════════════════════════════════════════
 def koin = [
-        // Koin AndroidX Scope features
-        koin_androidx_scope         :   "io.insert-koin:koin-androidx-scope:$versions.koin",
+        // Koin core features
+        koin_core                   :   "io.insert-koin:koin-core:$versions.koin",
 
-        // Koin AndroidX ViewModel features
-        koin_androidx_viewmodel     :   "io.insert-koin:koin-androidx-viewmodel:$versions.koin",
+        // Koin main features for Android (Scope,ViewModel ...)
+        koin_android                :   "io.insert-koin:koin-android:$versions.koin",
 
-        // Koin AndroidX Fragment features
-        koin_androidx_fragment      :   "io.insert-koin:koin-androidx-fragment:$versions.koin",
+        // Koin Java Compatibility
+        koin_android_compat         :   "io.insert-koin:koin-android-compat:$versions.koin",
 
-        // Koin AndroidX WorkManager
+        // Koin for Jetpack WorkManager
         koin_androidx_workmanager   :   "io.insert-koin:koin-androidx-workmanager:$versions.koin",
 
-        // Koin AndroidX Jetpack Compose
-        koin_androidx_compose       :    "io.insert-koin:koin-androidx-compose:$versions.koin",
-
-        // Koin AndroidX Experimental features
-        koin_androidx_ext           :    "io.insert-koin:koin-androidx-ext:$versions.koin"
+        // Koin for Jetpack Compose
+        koin_androidx_compose       :   "io.insert-koin:koin-androidx-compose:$versions.koin"
 ]
 
 libraries.koin = koin
-libraries.koin_test =  "org.koin:koin-test:$versions.koin"
+
+// Koin test features
+libraries.koin_test =  "io.insert-koin:koin-test:$versions.koin"
+
 
 // ═════════════════════════════════════════════════════════════════════════════════════════════
 // Navigation
@@ -138,7 +152,7 @@ libraries.paging = paging
 def retrofit2 = [
         retrofit2           : "com.squareup.retrofit2:retrofit:$versions.retrofit2",
         converter_moshi     :   "com.squareup.retrofit2:converter-moshi:$versions.retrofit2",
-        logging_interceptor :   "com.squareup.okhttp3:logging-interceptor:$versions.retrofit2"
+        logging_interceptor :   "com.squareup.okhttp3:logging-interceptor:$versions.okhttp"
 ]
 libraries.retrofit2 = retrofit2
 
@@ -149,23 +163,17 @@ def room = [
         room_runtime    :   "androidx.room:room-runtime:$versions.room",
         room_testing    :   "androidx.room:room-testing:$versions.room"
 ]
-def room_kapt = [
-        room_kapt       :   "androidx.room:room-compiler:$versions.room"
-]
+
 libraries.room = room
-libraries.room_kapt = room_kapt
+libraries.room_kapt = "androidx.room:room-compiler:$versions.room"
 
 // ═════════════════════════════════════════════════════════════════════════════════════════════
-// Moshi (JSON)
+// Gson (JSON)
 // ═════════════════════════════════════════════════════════════════════════════════════════════
-def moshi = [
-        moshi   :   "com.squareup.moshi:moshi-kotlin:$versions.moshi"
+def gson = [
+        gson   :   "com.google.code.gson:gson:$versions.gson"
 ]
-def moshi_kapt = [
-        moshi_kapt  :   "com.squareup.moshi:moshi-kotlin-codegen:$versions.moshi"
-]
-libraries.moshi = moshi
-libraries.moshi_kapt = moshi_kapt
+libraries.gson = gson
 
 // ═════════════════════════════════════════════════════════════════════════════════════════════
 // WorkManager
